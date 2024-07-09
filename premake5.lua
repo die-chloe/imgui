@@ -22,8 +22,8 @@ project "ImGui"
 	filter "system:linux"
 		pic "On"
 
-	filter "system:windows"
-		staticruntime "On"
+	filter "configurations:Debug"
+		symbols "On"
 
-	filter {"system:windows", "configurations:Release"}
-		buildoptions "/MT"
+	filter "configurations:Release"
+		optimize "On"	

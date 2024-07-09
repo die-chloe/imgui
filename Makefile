@@ -23,12 +23,9 @@ DEFINES +=
 INCLUDES += -I.
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -std=c++17
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS +=
 LDDEPS +=
-ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -s
 LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
 define PREBUILDCMDS
 endef
@@ -41,16 +38,17 @@ ifeq ($(config),debug)
 TARGETDIR = ../../../bin/Debug-linux/ImGui
 TARGET = $(TARGETDIR)/libImGui.a
 OBJDIR = ../../../build/Debug-linux/ImGui
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g -std=c++17
+ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
 
 else ifeq ($(config),release)
 TARGETDIR = ../../../bin/Release-linux/ImGui
 TARGET = $(TARGETDIR)/libImGui.a
 OBJDIR = ../../../build/Release-linux/ImGui
-
-else ifeq ($(config),dist)
-TARGETDIR = ../../../bin/Dist-linux/ImGui
-TARGET = $(TARGETDIR)/libImGui.a
-OBJDIR = ../../../build/Dist-linux/ImGui
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC -std=c++17
+ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -s
 
 endif
 
